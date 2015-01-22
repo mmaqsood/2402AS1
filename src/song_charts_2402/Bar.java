@@ -363,6 +363,9 @@ public class Bar {
 		if (getChords() != null && getChords() != ""){
 			stringToDraw += getChords() + " ";
 		}
+		else {
+			stringToDraw += "N.C ";
+		}
 		if (getTimeSignature()!= null && getTimeSignature() != ""){
 			stringToDraw += getTimeSignature() + " ";
 		}
