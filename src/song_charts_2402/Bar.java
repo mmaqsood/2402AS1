@@ -81,6 +81,7 @@ public class Bar {
 	
 	public String getChords() {return chords;}
 	public String getTimeSignature() {return timeSignature;}
+	public String getRehearsalLetter() {return rehearsalLetter;}
 	public BarLine getLeftBarLine() {return leftBarLine;}
 	public BarLine getRightBarLine() {return rightBarLine;}
 	
@@ -360,6 +361,7 @@ public class Bar {
 	private String getDrawString(){
 		String stringToDraw = "";
 		
+		// Build the string by getting the relevant attributes
 		if (getChords() != null && getChords() != ""){
 			stringToDraw += getChords() + " ";
 		}
@@ -368,6 +370,9 @@ public class Bar {
 		}
 		if (getTimeSignature()!= null && getTimeSignature() != ""){
 			stringToDraw += getTimeSignature() + " ";
+		}
+		if (getRehearsalLetter()!= null && getRehearsalLetter() != ""){
+			stringToDraw += "[" + getRehearsalLetter() + "] ";
 		}
 		
 		return stringToDraw.trim();
