@@ -80,9 +80,9 @@ public class Bar {
 	
 	
 	public String getChords() {return chords;}
+	public String getTimeSignature() {return timeSignature;}
 	public BarLine getLeftBarLine() {return leftBarLine;}
 	public BarLine getRightBarLine() {return rightBarLine;}
-	//to do: add other needed get methods
 	
 	//get methods for drawing location and size
 	public int getOriginX(){return originX;}
@@ -143,7 +143,8 @@ public class Bar {
        
         int stringHeight = areaHeight *2/3; //strings are drawn above their y-location
        
-  	   aPen2D.drawString("  " + getChords(), areaX, areaY + stringHeight);
+  
+  	   aPen2D.drawString("  " + getDrawString(), areaX, areaY + stringHeight);
   	   
        if(getLeftBarLine() == Bar.BarLine.NORMAL_BAR_LINE)
    	      aPen2D.drawString("|", areaX, areaY + stringHeight);        
@@ -350,6 +351,23 @@ public class Bar {
 		//System.out.println("END Song Data Parse");
 		return theBar;			
 				
+	}
+	
+	// Helper methods
+	
+	// This builds one string to draw using our properties
+	// and handles strings being null (aka not being in the bar XML)
+	private String getDrawString(){
+		String stringToDraw = "";
+		
+		if (getChords() != null && getChords() != ""){
+			stringToDraw += getChords() + " ";
+		}
+		if (getTimeSignature()!= null && getTimeSignature() != ""){
+			stringToDraw += getTimeSignature() + " ";
+		}
+		
+		return stringToDraw.trim();
 	}
 
 }
