@@ -322,7 +322,7 @@ public class Bar {
 				   else if(inputLine.startsWith(Bar.XMLRightDoubleBarLineTag)){
 					   theBar.setRightBarLine(Bar.BarLine.RIGHT_DOUBLE_BAR_LINE);					   						   
 			       }
-				   else if(inputLine.startsWith(Bar.XMLLeftRepeatTag)){
+				   else if(inputLine.startsWith(Bar.XMLLeftRepeatTag)){ 
 					   theBar.setLeftBarLine(Bar.BarLine.LEFT_REPEAT);					   						   
 			       }
 				   else if(inputLine.startsWith(Bar.XMLRightRepeatTag)){
