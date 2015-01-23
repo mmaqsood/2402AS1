@@ -397,6 +397,14 @@ public class Bar {
 			stringToDraw += "@ ";
 		}
 
+		if (getDalSegno()!= null && getDalSegno() !=""){
+			stringToDraw += getDalSegno() + " ";
+		}
+
+		if (getDaCapo()!= null && getDaCapo() !=""){
+			stringToDraw += getDaCapo() + " ";
+		}
+		
 		if (getText() != null && getText() !=""){
 			stringToDraw += getText() + " ";
 		}
@@ -433,12 +441,6 @@ public class Bar {
 			stringToDraw += getTimeSignature() + " ";
 		}
 
-		
-		// TODO Implement DalSegno and Da Capo, waiting for prof's reply.
-		if (getDalSegno()!= null && getDalSegno() !=""){
-			//DalSegno gets translated from 
-		}
-		
 		return stringToDraw.trim();
 	}
 
