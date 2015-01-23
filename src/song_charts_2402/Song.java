@@ -30,11 +30,15 @@ public class Song {
 
 	public static String XMLkeyStartTag = "<key>";
 	public static String XMLkeyEndTag = "</key>";
+
+	public static String XMLtempoStartTag = "<tempo>";
+	public static String XMLtempoEndTag = "</tempo>";
 	
 	private String title; //title of song
 	private String composer; //composer of song
 	private String musicalStyle; //musical style of song
 	private String key; //musical key of the song
+	private String tempo; //tempo of the song
 	private ArrayList<Bar> bars = new ArrayList<Bar>();
 	
 	public Song(){
@@ -52,7 +56,8 @@ public class Song {
 	private void setMusicalStyle(String aMusicalStyle) {musicalStyle = aMusicalStyle;}
 	public String getKey() {return key;}
 	private void setKey(String aKey) {key = aKey;}
-	
+	public String getTempo() {return tempo;}
+	private void setTempo(String aTempoString) {tempo = aTempoString;}
 	public ArrayList<Bar> getBars() {return bars;}
 	private void addBar(Bar aBar) {bars.add(aBar);}
 	
@@ -147,6 +152,12 @@ public class Song {
            	offsetY = offsetY + lineSpacing;
            	aPen2D.drawString("Key: " + getKey(), offsetX, offsetY); //draw musical key
 
+           	// A tempo might not always be defined
+           	if (getTempo() != null && getTempo() != ""){
+	           	offsetY = offsetY + lineSpacing;
+	           	aPen2D.drawString("Tempo: " + getTempo(), offsetX, offsetY); //draw tempo
+           	}
+
            	offsetX = 30; //hard coded for now
            	offsetY = offsetY + lineSpacing;
            	ArrayList<Bar> theBars = getBars();
@@ -206,6 +217,11 @@ public class Song {
 		outputFile.println(newIndent + XMLcomposerStartTag + composer + XMLcomposerEndTag);
 		outputFile.println(newIndent + XMLmusicalStyleStartTag + musicalStyle + XMLmusicalStyleEndTag);
 		outputFile.println(newIndent + XMLkeyStartTag + key + XMLkeyEndTag);
+
+		// A tempo might not always be defined
+       	if (getTempo() != null && getTempo() != ""){
+			outputFile.println(newIndent + XMLtempoStartTag + tempo + XMLtempoEndTag);
+       	}
 		
 		if(!(bars == null || bars.isEmpty())){
 			for(Bar bar : bars) bar.exportXMLToFile(newIndent, outputFile);
@@ -270,6 +286,16 @@ public class Song {
 						   
 						   if(keyString != null && keyString.length() > 0)
 							   theSong.setKey(keyString);					   
+					}
+
+					if(inputLine.startsWith(Song.XMLtempoStartTag) && 
+						inputLine.endsWith(Song.XMLtempoEndTag)){
+
+						String tempoString = inputLine.substring(Song.XMLtempoStartTag.length(), 
+						inputLine.length()- Song.XMLtempoEndTag.length()).trim();
+
+						if(tempoString != null && tempoString.length() > 0)
+						theSong.setTempo(tempoString);					   
 					}
 				   
 				   if(inputLine.startsWith(Bar.XMLbarStartTag)){
