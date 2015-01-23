@@ -43,7 +43,7 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 	private Bar popUpBar = null; //bar being edited with popup menu
 	
 	//highlight box so show over bar being played
-	private int boxX = 10, boxY = 10, boxWidth = 100, boxHeight = 50;
+	private int boxX = 10, boxY = 10, boxWidth = 100, boxHeight = 100;
     
 	//textfield used to edit bar chords etc.
 	private JTextField movingTextField = new JTextField("Hello World");

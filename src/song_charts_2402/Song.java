@@ -160,7 +160,7 @@ public class Song {
     		int columnCounter = 0;
            	for(int i=0; i<theBars.size(); i++){
      
-                if(columnCounter == 0) offsetY = offsetY + lineSpacing;
+                if(columnCounter == 0) offsetY = offsetY + lineSpacing + 15;
                 
            	   //determine area where bar should be drawn
                int allowedBarWidth = areaWidth/4; //arbitrary hardcoded for now

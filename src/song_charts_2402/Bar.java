@@ -86,8 +86,8 @@ public class Bar {
 	public String getEndings() {return endings;}
 	public String getDalSegno() {return dalSegno;}
 	public String getDaCapo() {return daCapo;}
-	public String getSign() {return dalSegno;}
-	public String getCoda() {return daCapo;}
+	public boolean getSign() {return sign;}
+	public boolean getCoda() {return coda;}
 
 
 	public BarLine getLeftBarLine() {return leftBarLine;}
@@ -152,7 +152,8 @@ public class Bar {
        
         int stringHeight = areaHeight *2/3; //strings are drawn above their y-location
        
-  
+       aPen2D.drawString(getUpperLineDrawString(), areaX, areaY);
+   	   
   	   aPen2D.drawString("  " + getDrawString(), areaX, areaY + stringHeight);
   	   
        if(getLeftBarLine() == Bar.BarLine.NORMAL_BAR_LINE)
@@ -363,6 +364,40 @@ public class Bar {
 	}
 	
 	// Helper methods
+	/*
+	 *	There are certain XML elements that we display above the bar
+	 *	and they are handled specially here.
+	 */
+	private String getUpperLineDrawString() {
+		String stringToDraw = "";
+
+		if (getRehearsalLetter()!= null && getRehearsalLetter() != ""){
+			// Rehersal letters are surrounded by the special []s
+			stringToDraw += "[" + getRehearsalLetter() + "] ";
+		}
+
+		if (getEndings()!= null && getEndings() != ""){
+			// Endings get translated from 1 and 2 to 1). and 2).
+			if (getEndings() == "1"){
+				stringToDraw += "1). ";
+			}
+			else {
+				stringToDraw += "2). ";
+			}
+		}
+
+		if (getSign()){
+			//Sign gets translated to $
+			stringToDraw += "$ ";
+		}
+	
+		if (getCoda()){
+			//Coda gets translated to $
+			stringToDraw += "@ ";
+		}
+
+		return stringToDraw;
+	}
 	
 	// This builds one string to draw using our properties
 	// and handles strings being null (aka not being in the bar XML)
@@ -393,26 +428,8 @@ public class Bar {
 			stringToDraw += getTimeSignature() + " ";
 		}
 
-		if (getRehearsalLetter()!= null && getRehearsalLetter() != ""){
-			// Rehersal letters are surrounded by the special []s
-			stringToDraw += "[" + getRehearsalLetter() + "] ";
-		}
-
-		if (getEndings()!= null && getEndings() != ""){
-			// Endings get translated from 1 and 2 to 1). and 2).
-			if (getEndings() == "1"){
-				stringToDraw += "1). ";
-			}
-			else {
-				stringToDraw += "2). ";
-			}
-		}
-
-		if (getSign()!= null){
-			//Sign gets translated to $
-			stringToDraw += "$ ";
-		}
-
+		
+		// TODO Implement DalSegno and Da Capo, waiting for prof's reply.
 		if (getDalSegno()!= null && getDalSegno() !=""){
 			//DalSegno gets translated from 
 		}
