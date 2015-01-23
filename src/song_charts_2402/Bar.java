@@ -82,6 +82,14 @@ public class Bar {
 	public String getChords() {return chords;}
 	public String getTimeSignature() {return timeSignature;}
 	public String getRehearsalLetter() {return rehearsalLetter;}
+	public String getPhraseAbreviation() {return phraseAbreviation;}
+	public String getEndings() {return endings;}
+	public String getDalSegno() {return dalSegno;}
+	public String getDaCapo() {return daCapo;}
+	public String getSign() {return dalSegno;}
+	public String getCoda() {return daCapo;}
+
+
 	public BarLine getLeftBarLine() {return leftBarLine;}
 	public BarLine getRightBarLine() {return rightBarLine;}
 	
@@ -361,18 +369,52 @@ public class Bar {
 	private String getDrawString(){
 		String stringToDraw = "";
 		
-		// Build the string by getting the relevant attributes
+		/*
+		 * Build the string by getting the relevant attributes if they
+		 * are present in the chord.
+		*/
+
 		if (getChords() != null && getChords() != ""){
 			stringToDraw += getChords() + " ";
 		}
 		else {
-			stringToDraw += "N.C ";
+			// Reason we have to check for PhraseAbreviation only
+			// if there is no chord is there is so we don't
+			// print N.C by mistake when we want to print x/xx
+			if (getPhraseAbreviation() != null & getPhraseAbreviation() != ""){
+				stringToDraw +=  getPhraseAbreviation() + " ";
+			}
+			else {
+				stringToDraw += "N.C ";
+			}
 		}
+
 		if (getTimeSignature()!= null && getTimeSignature() != ""){
 			stringToDraw += getTimeSignature() + " ";
 		}
+
 		if (getRehearsalLetter()!= null && getRehearsalLetter() != ""){
+			// Rehersal letters are surrounded by the special []s
 			stringToDraw += "[" + getRehearsalLetter() + "] ";
+		}
+
+		if (getEndings()!= null && getEndings() != ""){
+			// Endings get translated from 1 and 2 to 1). and 2).
+			if (getEndings() == "1"){
+				stringToDraw += "1). ";
+			}
+			else {
+				stringToDraw += "2). ";
+			}
+		}
+
+		if (getSign()!= null){
+			//Sign gets translated to $
+			stringToDraw += "$ ";
+		}
+
+		if (getDalSegno()!= null && getDalSegno() !=""){
+			//DalSegno gets translated from 
 		}
 		
 		return stringToDraw.trim();
