@@ -86,6 +86,7 @@ public class Bar {
 	public String getEndings() {return endings;}
 	public String getDalSegno() {return dalSegno;}
 	public String getDaCapo() {return daCapo;}
+	public String getText() {return text;}
 	public boolean getSign() {return sign;}
 	public boolean getCoda() {return coda;}
 
@@ -394,6 +395,10 @@ public class Bar {
 		if (getCoda()){
 			//Coda gets translated to $
 			stringToDraw += "@ ";
+		}
+
+		if (getText() != null && getText() !=""){
+			stringToDraw += getText() + " ";
 		}
 
 		return stringToDraw;
