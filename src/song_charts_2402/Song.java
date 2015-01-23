@@ -155,7 +155,7 @@ public class Song {
            	// A tempo might not always be defined
            	if (getTempo() != null && getTempo() != ""){
 	           	offsetY = offsetY + lineSpacing;
-	           	aPen2D.drawString("Tempo: " + getTempo(), offsetX, offsetY); //draw tempo
+	           	aPen2D.drawString("Tempo: " + getTempo(), offsetX, offsetY); //draw tempo 
            	}
 
            	offsetX = 30; //hard coded for now
