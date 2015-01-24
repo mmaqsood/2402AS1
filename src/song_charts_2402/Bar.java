@@ -147,9 +147,9 @@ public class Bar {
         
         //set graphic location of bar
         originX = areaX;
-        originY = areaY;
+        originY = areaY-15;
         width = areaWidth;
-        height = areaHeight;
+        height = areaHeight+10;
        
         int stringHeight = areaHeight *2/3; //strings are drawn above their y-location
        
