@@ -45,6 +45,9 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 	//highlight box so show over bar being played
 	private int boxX = 10, boxY = 10, boxWidth = 100, boxHeight = 100;
     
+	//how we determine to stop/continue the red highlight
+	private boolean continueToAdvanceBar = true;
+	
 	//textfield used to edit bar chords etc.
 	private JTextField movingTextField = new JTextField("Hello World");
 	
@@ -209,19 +212,16 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 	
 	
 	public void startPlayback(){
-		System.out.println("start playback");
-		//TO DO
+		continueToAdvanceBar = true;
 		
 	}
 	public void pausePlayback(){
-		System.out.println("pause playback");
-		//TO DO
+		continueToAdvanceBar = false;
 		
 	}
 	public void stopPlayback(){
-		System.out.println("stop playback");
-		//TO DO
-		
+		continueToAdvanceBar = false;
+		showSong(songToView);
 	}	
 	public void setTempo(int bpm){
 		System.out.println("tempo: " + bpm);
@@ -238,16 +238,15 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 		if(currentBar == null) return;
 		
 		
-		//TO DO only advance bar if we are playing, not
-		//when paused or stopped.
-		
-		currentBar = songToView.getBarAfter(currentBar);
+		if (continueToAdvanceBar){
+			currentBar = songToView.getBarAfter(currentBar);
 
-		//set highlight box to cover current bar
-        boxX = currentBar.getOriginX();
-        boxY = currentBar.getOriginY();     
-        boxWidth = currentBar.getWidth();
-		boxHeight = currentBar.getHeight();
+			//set highlight box to cover current bar
+	        boxX = currentBar.getOriginX();
+	        boxY = currentBar.getOriginY();     
+	        boxWidth = currentBar.getWidth();
+			boxHeight = currentBar.getHeight();
+		}
 		
 	}
 	
