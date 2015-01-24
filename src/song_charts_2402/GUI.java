@@ -20,8 +20,25 @@ import java.util.ArrayList;
 
 
 public class GUI extends JFrame implements ActionListener{
-		
-	private SongList songList; //collection of songs
+	
+	/*
+	 * List gets populated with songs from the XML once
+	 * and is never modified again.
+	 * 
+	 * This list is used by the filteredSongList to filter songs
+	 * based on user input.
+	 * 
+	 * Reason this is needed for now is we need two lists; one that
+	 * we don't touch that we can always read from and another that
+	 * contains the filtered results that we can show to the view.
+	 */
+	private SongList masterSongList; 
+	
+	/*
+	 * List contains songs from masterSongList that have a 
+	 * song title that contains whatever the user types in, case insensitive.
+	 */
+	private SongList filteredSongList;
 	private Song    selectedSong; //song currently selected in the GUI list
 	
     private Timer timer; //can used for animation 
@@ -61,8 +78,9 @@ public class GUI extends JFrame implements ActionListener{
 	public GUI(String title) {
 		super(title);
 
-        songList = new SongList();
-        
+        masterSongList = new SongList();
+        filteredSongList = new SongList();
+
         //add some sample songs for now
         //songList.add(new Song("All The Things You Are"));
         //songList.add(new Song("The Girl From Ipanema"));
@@ -116,9 +134,8 @@ public class GUI extends JFrame implements ActionListener{
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
 		setLayout(layout);
 
-
 		// Make the main window view panel
-		view = new ListPanel(songList);
+		view = new ListPanel(filteredSongList);
 		layoutConstraints.gridx = 0;
 		layoutConstraints.gridy = 0;
 		layoutConstraints.gridwidth = 1;
@@ -193,7 +210,7 @@ public class GUI extends JFrame implements ActionListener{
 
 
 		// Start off with everything updated properly to reflect the model state
-		update();
+		search();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -243,8 +260,8 @@ public class GUI extends JFrame implements ActionListener{
 	    File dataFile = getInputFile();
 	    SongList theSongs = SongList.parseFromFile(dataFile);
 	    if(theSongs != null){
-	      songList = theSongs;
-	      view.setSongListData(songList);
+	      masterSongList = theSongs;
+	      view.setSongListData(masterSongList);
 	      selectedSong = null;
 	    }
 	    update();
@@ -302,7 +319,7 @@ public class GUI extends JFrame implements ActionListener{
                	outputFile.println(XMLDocTypeHeader);
                	outputFile.println(indent + fakeBookXMLStartTag);
 
-               	songList.exportXMLToFile(indent+"  ", outputFile);
+               	filteredSongList.exportXMLToFile(indent+"  ", outputFile);
 
             	outputFile.println(indent + fakeBookXMLEndTag);
 
@@ -338,8 +355,12 @@ public class GUI extends JFrame implements ActionListener{
 	private void search() {
 		
 		String searchPrototype = view.getSearchText().getText().trim();
-      	//HOOK FOR SEARCH, NOT IMPLEMENTED YET		
 
+		// Search
+		filteredSongList = masterSongList.searchForSongs(masterSongList, searchPrototype);
+		
+		// Set
+		view.setSongListData(filteredSongList);
 		System.out.println("Search clicked");
 		update();
 	}
@@ -356,8 +377,7 @@ public class GUI extends JFrame implements ActionListener{
 		//select songs or toggle it off
 		selectedSong = (Song)(view.getSongJList().getSelectedValue());
 		
-		System.out.println("Song Selected: " + selectedSong);				
-		
+		System.out.println("Song Selected: " + selectedSong);	
 		chartView.showSong(selectedSong);
 	
 		update();

@@ -74,4 +74,28 @@ public class SongList {
 				
 	}
 
+	public static SongList searchForSongs(SongList songsToFilterFrom, String songNameFilter){
+		if (songNameFilter != null && songNameFilter.length() > 0){
+			SongList filteredSongs = new SongList();
+			
+			// Convert both the title filter from the user and the title
+			// of the song we are checking to lowercase so we can perform
+			// a case insensitive search.
+			songNameFilter = songNameFilter.toLowerCase();
+			
+			for(Song song : songsToFilterFrom.getSongs()){
+				if (song.getTitle().toLowerCase().contains(songNameFilter)){
+					filteredSongs.add(song);
+				}
+			}
+
+			return filteredSongs;
+		}
+		else {
+			//Return all; no filter was selected
+			return songsToFilterFrom;
+		}
+		
+	}
+
 }
