@@ -122,8 +122,8 @@ public class Bar {
 	public void setPhraseAbreviation(String aPhraseString) {phraseAbreviation = aPhraseString;}
 	public void setLeftBarLine(BarLine aBarLineConstant) {leftBarLine = aBarLineConstant;}
 	public void setRightBarLine(BarLine aBarLineConstant) {rightBarLine = aBarLineConstant;}
-	public void setSign(Boolean aSign) {sign = aSign;}
-	public void setCoda(Boolean aCoda) {coda = aCoda;}
+	public void setSign(boolean aSign) {sign = aSign;}
+	public void setCoda(boolean aCoda) {coda = aCoda;}
 	
 	public String toString(){
 				
