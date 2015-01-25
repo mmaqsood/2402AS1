@@ -47,11 +47,11 @@ public class GUI extends JFrame implements ActionListener{
 	private	JMenu			fileMenu = new JMenu("File");
 	private	JMenu			playMenu = new JMenu("Play");
 	private	JMenu			tempoMenu = new JMenu("Tempo");
+	private	JMenu			songMenu = new JMenu("Song");
+	private	JMenu			barMenu = new JMenu("Bar");
     //FILE MENU ITEMS
 	private JMenuItem		openFileItem = new JMenuItem("Open XML File");    
-	private JMenuItem		exportXMLItem = new JMenuItem("Export XML");   
-	private JMenuItem		newSongItem = new JMenuItem("New Song");  
-	private JMenuItem		updateSongItem = new JMenuItem("Update Song");  
+	private JMenuItem		exportXMLItem = new JMenuItem("Export XML");
 	
 	private JMenuItem		playItem = new JMenuItem("Play");    
 	private JMenuItem		pauseItem = new JMenuItem("Pause");    
@@ -59,9 +59,14 @@ public class GUI extends JFrame implements ActionListener{
 	
 	private JMenuItem		t100Item = new JMenuItem("100 bpm");    
 	private JMenuItem		t120Item = new JMenuItem("120 bpm");    
-	private JMenuItem		t140Item = new JMenuItem("140 bpm");    
-
-
+	private JMenuItem		t140Item = new JMenuItem("140 bpm");   
+	
+	//Song items
+	private JMenuItem		newSongItem = new JMenuItem("New Song");  
+	private JMenuItem		updateSongItem = new JMenuItem("Update Song");  
+	
+	//Bar items
+	private JMenuItem		newBarItem = new JMenuItem("Add Bar");  
 	
 
 	// Store the view that contains the components
@@ -98,13 +103,9 @@ public class GUI extends JFrame implements ActionListener{
 		aMenuBar.add(fileMenu);
 		fileMenu.add(openFileItem);
 		fileMenu.add(exportXMLItem);
-		fileMenu.add(newSongItem);
-		fileMenu.add(updateSongItem);
 		
 		openFileItem.addActionListener(this);
 		exportXMLItem.addActionListener(this);
-		newSongItem.addActionListener(this);
-		updateSongItem.addActionListener(this);
 		
 		//PLAY MENU
 		aMenuBar.add(playMenu);
@@ -127,6 +128,20 @@ public class GUI extends JFrame implements ActionListener{
 		t140Item.addActionListener(this);
 
 
+		// Song menu
+		aMenuBar.add(songMenu);
+		songMenu.add(newSongItem);
+		songMenu.add(updateSongItem);
+		
+		newSongItem.addActionListener(this);
+		updateSongItem.addActionListener(this);
+		
+		// Bar menu
+		aMenuBar.add(barMenu);
+		barMenu.add(newBarItem);
+		
+		newBarItem.addActionListener(this);
+		
 		addWindowListener(
 				new WindowAdapter() {
 	 				public void windowClosing(WindowEvent e) {
@@ -257,6 +272,11 @@ public class GUI extends JFrame implements ActionListener{
 		else if (e.getSource() == updateSongItem){
 			if (selectedSong != null){
 				new SongDetails(this, selectedSong);
+			}
+		}
+		else if (e.getSource() == newBarItem){
+			if (selectedSong != null){
+				new AddBar(selectedSong);
 			}
 		}
 

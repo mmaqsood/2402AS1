@@ -67,7 +67,7 @@ public class Song {
 	public String getTempo() {return tempo;}
 	public void setTempo(String aTempoString) {tempo = aTempoString;}
 	public ArrayList<Bar> getBars() {return bars;}
-	private void addBar(Bar aBar) {bars.add(aBar);}
+	public void addBar(Bar aBar) {bars.add(aBar);}
 	
 	public Bar getBarAfter(Bar aBar){
 		
