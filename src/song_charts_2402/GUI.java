@@ -490,7 +490,7 @@ public class GUI extends JFrame implements ActionListener{
 	 */
 	public void addSongFromChildForm(Song newSong){
 		if (newSong != null){
-			// Update both lists
+			// Update the master list
 			masterSongList.add(newSong);
 			
 			// Update the UI
