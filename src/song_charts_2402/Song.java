@@ -48,6 +48,14 @@ public class Song {
 		title = aSongTitle;
 	}
 	
+	public Song(String aSongTitle, String aComposer, String aMusicalStyle, String aKey, String aTempo){
+		title = aSongTitle;
+		composer = aComposer;
+		musicalStyle = aMusicalStyle;
+		key = aKey;
+		tempo = aTempo;
+	}
+	
 	public String getTitle() {return title;}
 	private void setTitle(String aTitleString) {title = aTitleString;}
 	public String getComposer() {return composer;}

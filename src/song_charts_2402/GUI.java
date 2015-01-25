@@ -49,7 +49,8 @@ public class GUI extends JFrame implements ActionListener{
 	private	JMenu			tempoMenu = new JMenu("Tempo");
     //FILE MENU ITEMS
 	private JMenuItem		openFileItem = new JMenuItem("Open XML File");    
-	private JMenuItem		exportXMLItem = new JMenuItem("Export XML");    
+	private JMenuItem		exportXMLItem = new JMenuItem("Export XML");   
+	private JMenuItem		newSongItem = new JMenuItem("New Song");  
 	
 	private JMenuItem		playItem = new JMenuItem("Play");    
 	private JMenuItem		pauseItem = new JMenuItem("Pause");    
@@ -96,9 +97,11 @@ public class GUI extends JFrame implements ActionListener{
 		aMenuBar.add(fileMenu);
 		fileMenu.add(openFileItem);
 		fileMenu.add(exportXMLItem);
-		
+		fileMenu.add(newSongItem);
+
 		openFileItem.addActionListener(this);
 		exportXMLItem.addActionListener(this);
+		newSongItem.addActionListener(this);
 
 		//PLAY MENU
 		aMenuBar.add(playMenu);
@@ -243,15 +246,26 @@ public class GUI extends JFrame implements ActionListener{
 		else if(e.getSource() == t140Item){
 			chartView.setTempo(140);		    
 		}
+		else if(e.getSource() == newSongItem){
+			if (masterSongList.getSongs().size() > 0){
+				new AddSong(this);
+			}
+		}
 
 	}
 
 	
 	private void tick(){
-		//Handle a timer event
-		chartView.advanceCurrentBar();
-		//System.out.println("TICK");
-		update();
+		if (selectedSong != null && selectedSong.getBars().size() > 0){
+			//Handle a timer event
+			chartView.advanceCurrentBar();
+			//System.out.println("TICK");
+			update();
+		}
+	}
+	
+	public SongList getMasterSongList(){
+		return masterSongList;
 	}
 	
 	private void getSongDataFromFile(){
@@ -390,7 +404,25 @@ public class GUI extends JFrame implements ActionListener{
 	}
 
 
-
+	
+	// This is used so that the child form (Add Song for example)
+	// can tell the presentation layer to update itself.
+	public void updateForChildForm(Song modifiedSong){
+		if (modifiedSong != null){
+			// Update both lists
+			masterSongList.add(modifiedSong);
+			filteredSongList.add(modifiedSong);
+			
+			// Update the UI
+			if (filteredSongList.getSongs().size() > 1){
+				view.setSongListData(filteredSongList);
+			}
+			else {
+				view.setSongListData(masterSongList);
+			}
+		}
+	}
+	
 	// Update the list
 	private void updateList() {        
 		
