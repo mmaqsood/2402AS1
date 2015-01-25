@@ -13,7 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-
+/*
+ * Class/Form to capture song details and allow the user
+ * to create a song.
+ */
 public class AddSong {
 
 	private JFrame frame;
@@ -26,32 +29,46 @@ public class AddSong {
 	private SongList masterSongList; 
 	private GUI parentForm;
 
-	/**
-	 * Create the application.
-	 */
+	
 	public AddSong(GUI callingWindow) {
 		masterSongList = callingWindow.getMasterSongList();
 		parentForm = callingWindow;
 		initialize();
 	}
 	
+	/*
+	 * Populate our picklist with all the song names so that
+	 * the user can tell the form to copy values from that
+	 * song.
+	 * 
+	 * Items are added in the format:
+	 * [index in song list +1] [Song name]
+	 * 
+	 * This setup allows us to access the song in the list
+	 * inexpensively.
+	 */
 	private void populateCombo(){
-		
-		// Helps us find out which song after
 		int index = 1;
+		//Add all the songs.
 		for (Song s : masterSongList.getSongs()){
 			comboBox.addItem(index + ". " + s.getTitle());
 			index++;
 		}
 	}
 	
+	/*
+	 * Pass data from the song selected to copy data from
+	 * to the form's UI.
+	 */
 	private void populateFieldsFromSelectedSong(){
 		Object selectedItem = comboBox.getSelectedItem();
 		
 		if (selectedItem != null && selectedItem != ""){
+			//This is the inexpensive access into our list.
 			int songIndex = Character.getNumericValue(selectedItem.toString().charAt(0)) - 1;
 			Song selectedSong = masterSongList.getSongs().get(songIndex);
 			
+			//Copy over values to UI.
 			titleText.setText(selectedSong.getTitle());
 			composerText.setText(selectedSong.getComposer());
 			musicalStyleText.setText(selectedSong.getMusicalStyle());
@@ -59,6 +76,8 @@ public class AddSong {
 			tempoText.setText(selectedSong.getTempo());
 		}
 		else {
+			//Blank the UI otherwise and assume the user
+			//wants to create from a blank slate.
 			titleText.setText("");
 			composerText.setText("");
 			musicalStyleText.setText("");
@@ -121,7 +140,7 @@ public class AddSong {
 										keyText.getText(),
 										tempoText.getText());
 				
-				// Update the parent with the new song.
+				//Update the parent with the new song.
 				parentForm.addSongFromChildForm(newSong);
 				frame.dispose();
 			}

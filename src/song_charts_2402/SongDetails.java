@@ -8,6 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+/*
+ * Class/Form to capture song details and allow the user
+ * to change a song.
+ */
 public class SongDetails {
 
 	private JFrame frame;
@@ -20,15 +25,16 @@ public class SongDetails {
 	private Song song;
 	private GUI parentForm;
 	
-	/**
-	 * Create the application.
-	 */
 	public SongDetails(GUI callingWindow, Song _song) {
 		parentForm = callingWindow;
 		song = _song;
 		initialize();
 	}
 	
+	/*
+	 * Pass data from the song that was passed in
+	 * to the form's UI.
+	 */
 	private void populateFieldsFromSong(){
 		if (song != null){
 			titleText.setText(song.getTitle());
@@ -87,6 +93,8 @@ public class SongDetails {
 		JButton btnSaveButton = new JButton("Save");
 		btnSaveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Update the song to reflect information entered
+				//in the UI.
 				song.setTitle(titleText.getText());
 				song.setComposer(composerText.getText());
 				song.setMusicalStyle(musicalStyleText.getText());

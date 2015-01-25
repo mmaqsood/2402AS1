@@ -11,17 +11,10 @@ public class ApplicationMain {
 	public static void main(String[] args) {
 		GUI frame = null;
 		
-
-		        		        
-				
-		 frame =  new GUI("Fake Book Songs"); //create GUI frame with knowledge of the database
-		        
-
-        //make GUI visible
+		//Create the frame with a static name for now.
+		frame =  new GUI("Fake Book Songs");
+		
+		//Show the window.
 		frame.setVisible(true);
-
-
-
-
 	}
 }

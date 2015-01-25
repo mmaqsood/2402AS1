@@ -11,7 +11,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+/*
+ * Class/Form to capture bar details and allow the user
+ * to change a bar.
+ */
 public class BarDetails {
 
 	private JFrame frame;
@@ -38,15 +41,17 @@ public class BarDetails {
 
 	private Bar bar;
 	private Song song;
-	/**
-	 * Create the application.
-	 */
+	
 	public BarDetails(Song _song, Bar _bar) {
 		bar = _bar;
 		song = _song;
 		initialize();
 	}
 	
+	/*
+	 * Pass data from the bar that was passed in
+	 * to the form's UI.
+	 */
 	private void populateFieldsFromBar(){
 		if (bar != null){
 			chordsText.setText(bar.getChords());
@@ -154,6 +159,8 @@ public class BarDetails {
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//Update the bar to reflect information entered
+				//in the UI.
 				bar.setChords(chordsText.getText());
 				bar.setTimeSignature(timeSignatureText.getText());
 				bar.setPhraseAbreviation(phraseAbreviationText.getText());

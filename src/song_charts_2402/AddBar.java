@@ -10,8 +10,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
-
+/*
+ * Class/Form to capture bar details and allow the user
+ * to add a bar.
+ */
 public class AddBar {
 
 	private JFrame frame;
@@ -37,9 +39,7 @@ public class AddBar {
 	
 	private Song song;
 	
-	/**
-	 * Create the application.
-	 */
+	
 	public AddBar(Song _song) {
 		song = _song;
 		initialize();
@@ -137,6 +137,7 @@ public class AddBar {
 		btnAddBar = new JButton("Add Bar");
 		btnAddBar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//Create a new bar with the user specified information
 				Bar newBar = new Bar();
 				
 				newBar.setChords(chordsText.getText());
@@ -150,6 +151,7 @@ public class AddBar {
 				newBar.setDaCapo(daCapoText.getText());
 				newBar.setDalSegno(dalSegnoText.getText());
 				
+				//Add it to our song.
 				song.addBar(newBar);
 				frame.dispose();
 			}

@@ -174,12 +174,10 @@ public class Song {
     		lineSpacing = ChartView.chartPointSize + 10;
          	
     		//have all the bars draw themselves in the designated area
-    		
-    		//TO DO draw 4 bars across the areaWidth not just 1
     		int columnCounter = 0;
            	for(int i=0; i<theBars.size(); i++){
      
-                if(columnCounter == 0) offsetY = offsetY + lineSpacing + 15;
+               if(columnCounter == 0) offsetY = offsetY + lineSpacing + 15;
                 
            	   //determine area where bar should be drawn
                int allowedBarWidth = areaWidth/4; //arbitrary hardcoded for now
@@ -190,12 +188,10 @@ public class Song {
                columnCounter++;
                columnCounter = columnCounter % 4;
                }
-            
- 
-           	           	           	
-        	aPen.setFont(cacheFont); //restore pen font to cached font
+           	
+           	//restore pen font to cached font
+        	aPen.setFont(cacheFont); 
        
-		
 	}
 	
 	

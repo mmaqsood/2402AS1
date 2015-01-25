@@ -48,8 +48,6 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 	//how we determine to stop/continue the red highlight
 	private boolean continueToAdvanceBar = true;
 	
-	//textfield used to edit bar chords etc.
-	private JTextField movingTextField = new JTextField("Hello World");
 	
 	//popup menu for Bars to edit properties of bars
 	private JPopupMenu barPopupMenu = new JPopupMenu(); //context menu for Bars
@@ -152,37 +150,6 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
     	addMouseListener(this);
     	addMouseMotionListener(this);
     	
-	    movingTextField.setLocation(50,50); //arbitrary default location
-	    movingTextField.setSize(70,20); //arbitrary default size
-	    movingTextField.setFont(defaultChartFont);
-	    movingTextField.setBackground(new Color(186,234,255)); //light blue
-	    movingTextField.setBorder(null); //no border around text field
-        add(movingTextField); //add moving text edit field to this panel
-	    movingTextField.setVisible(false); //hide text edit field
-	    
-        movingTextField.addActionListener( 
-			new ActionListener() { 
-				public void actionPerformed(ActionEvent event){ 
-					if(barBeingEdited != null){
-						barBeingEdited.parseDataString(movingTextField.getText());
-						barBeingEdited = songToView.getBarAfter(barBeingEdited);
-	
-						//Advance text edit field to next bar
-
-						movingTextField.setLocation(barBeingEdited.getOriginX(), barBeingEdited.getOriginY());
-					    movingTextField.setText(barBeingEdited.getChords());
-					    movingTextField.setSize(barBeingEdited.getWidth(), barBeingEdited.getHeight());			 
-					    movingTextField.setVisible(true);
-					    movingTextField.requestFocus(); //request keyboard focus
-
-					}
-					
-					update(); //update GUI
-
-				} 
-			} 
-		);
-        
         buildBarPopupMenu();
 
 		 		
@@ -265,8 +232,6 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mouseClicked(MouseEvent event) {
 		// TODO Auto-generated method stub
-		
-	     movingTextField.setVisible(false); //hide editing text field
 		
 		if(event.getClickCount() == 2){
 		   //handle double click

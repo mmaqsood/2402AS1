@@ -125,13 +125,6 @@ public class Bar {
 	public void setSign(Boolean aSign) {sign = aSign;}
 	public void setCoda(Boolean aCoda) {coda = aCoda;}
 	
-	public void parseDataString(String aDataString){
-		//for now assume aDataString just has chord data
-		setChords(aDataString);
-	
-	}
-
-	
 	public String toString(){
 				
 		return "    chords:" +  chords + "\n" +
@@ -177,8 +170,8 @@ public class Bar {
  
 	}
 	
+	//Export this bar as XML data to output file
 	public void exportXMLToFile(String indent, PrintWriter outputFile){
-		//Export this bar as XML data to output file
 		
 		String nextIndent = indent + "   ";
 
@@ -362,10 +355,14 @@ public class Bar {
 				
 	}
 	
-	// Helper methods
 	/*
-	 *	There are certain XML elements that we display above the bar
-	 *	and they are handled specially here.
+	 * Helper methods.
+	 */
+	
+	
+	/*
+	 *	There are certain parts of the bar and specific XML elements
+	 * 	that we display above the bar and they are handled here.
 	 */
 	private String getUpperLineDrawString() {
 		String stringToDraw = "";
@@ -410,16 +407,16 @@ public class Bar {
 		return stringToDraw;
 	}
 	
-	// This builds one string to draw using our properties
-	// and handles strings being null (aka not being in the bar XML)
+	/*
+	 * Generates a string that represents the XML bar for the UI to display.
+	 */
 	private String getDrawString(){
 		String stringToDraw = "";
 		
 		/*
 		 * Build the string by getting the relevant attributes if they
-		 * are present in the chord.
+		 * are present in the bar.
 		*/
-
 		if (getChords() != null && !getChords().isEmpty()){
 			stringToDraw += getChords() + " ";
 		}

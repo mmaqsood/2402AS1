@@ -39,24 +39,31 @@ public class GUI extends JFrame implements ActionListener{
 	 * song title that contains whatever the user types in, case insensitive.
 	 */
 	private SongList filteredSongList;
-	private Song    selectedSong; //song currently selected in the GUI list
 	
-    private Timer timer; //can used for animation 
+	//Song currently selected in the GUI list
+	private Song    selectedSong; 
+	
+	//Used for animating the red highlights on bars in a song.
+    private Timer timer; 
 
+    //UI Elements
 	private	JMenuBar		aMenuBar = new JMenuBar();
 	private	JMenu			fileMenu = new JMenu("File");
 	private	JMenu			playMenu = new JMenu("Play");
 	private	JMenu			tempoMenu = new JMenu("Tempo");
 	private	JMenu			songMenu = new JMenu("Song");
 	private	JMenu			barMenu = new JMenu("Bar");
-    //FILE MENU ITEMS
+	
+    //File menu items
 	private JMenuItem		openFileItem = new JMenuItem("Open XML File");    
 	private JMenuItem		exportXMLItem = new JMenuItem("Export XML");
 	
+	//Play menu items
 	private JMenuItem		playItem = new JMenuItem("Play");    
 	private JMenuItem		pauseItem = new JMenuItem("Pause");    
 	private JMenuItem		stopItem = new JMenuItem("Stop");    
 	
+	//Tempo menu items
 	private JMenuItem		t100Item = new JMenuItem("100 bpm");    
 	private JMenuItem		t120Item = new JMenuItem("120 bpm");    
 	private JMenuItem		t140Item = new JMenuItem("140 bpm");   
@@ -66,40 +73,42 @@ public class GUI extends JFrame implements ActionListener{
 	private JMenuItem		updateSongItem = new JMenuItem("Update Song");  
 	
 	//Bar items
-	private JMenuItem		newBarItem = new JMenuItem("Add Bar");  
-	
+	private JMenuItem		newBarItem = new JMenuItem("Add Bar");
 
-	// Store the view that contains the components
-	ListPanel 		view; //panel of GUI components for the main window
-	ChartView chartView; //panel to view PDF charts
+	//
+	
+	/*
+	 * These are components to build up our UI.
+	 */
+	//Panel of GUI components for the main window
+	ListPanel 		view;
+	
+	//Panel to view PDF charts
+	ChartView chartView; 
 	
 	GUI thisFrame;
 
-	// Here are the component listeners
+	//Listeners for our UI.
 	ActionListener			theSearchButtonListener;
 	ActionListener			timerListener;
 	ListSelectionListener	songListSelectionListener;
 	KeyListener             keyListener;
 
-	// Here is the default constructor
+	//Default constructor.
 	public GUI(String title) {
 		super(title);
-
+		
+		//Set the two lists.
         masterSongList = new SongList();
         filteredSongList = new SongList();
-
-        //add some sample songs for now
-        //songList.add(new Song("All The Things You Are"));
-        //songList.add(new Song("The Girl From Ipanema"));
-        //songList.add(new Song("My One And Only Love"));
-        //songList.add(new Song("Footprints"));
-      
         
  		selectedSong = null;
 		thisFrame = this;
 		
+		//Building our menu bar.
 		setJMenuBar(aMenuBar);
-		//FILE MENU
+		
+		//File menu
 		aMenuBar.add(fileMenu);
 		fileMenu.add(openFileItem);
 		fileMenu.add(exportXMLItem);
@@ -107,7 +116,7 @@ public class GUI extends JFrame implements ActionListener{
 		openFileItem.addActionListener(this);
 		exportXMLItem.addActionListener(this);
 		
-		//PLAY MENU
+		//Play menu
 		aMenuBar.add(playMenu);
 		playMenu.add(playItem);
 		playMenu.add(pauseItem);
@@ -117,7 +126,7 @@ public class GUI extends JFrame implements ActionListener{
 		pauseItem.addActionListener(this);
 		stopItem.addActionListener(this);
 		
-		//PLAY MENU
+		//Tempo menu
 		aMenuBar.add(tempoMenu);
 		tempoMenu.add(t100Item);
 		tempoMenu.add(t120Item);
@@ -128,7 +137,7 @@ public class GUI extends JFrame implements ActionListener{
 		t140Item.addActionListener(this);
 
 
-		// Song menu
+		//Song menu
 		aMenuBar.add(songMenu);
 		songMenu.add(newSongItem);
 		songMenu.add(updateSongItem);
@@ -136,12 +145,13 @@ public class GUI extends JFrame implements ActionListener{
 		newSongItem.addActionListener(this);
 		updateSongItem.addActionListener(this);
 		
-		// Bar menu
+		//Bar menu
 		aMenuBar.add(barMenu);
 		barMenu.add(newBarItem);
 		
 		newBarItem.addActionListener(this);
 		
+		//Exit the window and stop the timer when we're closing.
 		addWindowListener(
 				new WindowAdapter() {
 	 				public void windowClosing(WindowEvent e) {
@@ -151,6 +161,9 @@ public class GUI extends JFrame implements ActionListener{
 				}
 			);
 
+		/*
+		 * Setup for the UI.
+		 */
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints layoutConstraints = new GridBagConstraints();
 		setLayout(layout);
@@ -182,9 +195,12 @@ public class GUI extends JFrame implements ActionListener{
 		layoutConstraints.weighty = 1.0;
 		layout.setConstraints(chartView, layoutConstraints);
 		add(chartView);
-
-
 			
+		/*
+		 * Events to propogate changes to UI.
+		 */
+		
+		//Click of the search button.
 		theSearchButtonListener = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					search();
@@ -192,7 +208,7 @@ public class GUI extends JFrame implements ActionListener{
 
 
 
-		// Add a listener to allow selection of buddies from the list
+		//Selection of a song in the song list.
 		songListSelectionListener = new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 				selectSong();
@@ -200,6 +216,7 @@ public class GUI extends JFrame implements ActionListener{
 
 
 			
+		//Searching when enter is pressed.
 		keyListener = new KeyListener() {
 
 				@Override
@@ -225,15 +242,19 @@ public class GUI extends JFrame implements ActionListener{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900,700);
 		
+		//Setup of the timer.
 		int millisecondsBetweenEvents = 1000; 
 		timer = new Timer(millisecondsBetweenEvents, this); 
-		timer.start(); //start the timer
+		timer.start(); 
 
-
-		// Start off with everything updated properly to reflect the model state
+		//Begin by searching so that we can handle future searches and make it 
+		//easy to deal with searches.
 		search();
 	}
 	
+	/*
+	 * Generic method to listen for multiple UI element events.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == timer){
@@ -282,7 +303,9 @@ public class GUI extends JFrame implements ActionListener{
 
 	}
 
-	
+	/*
+	 * Move the red highlight to the next bar.
+	 */
 	private void tick(){
 		if (selectedSong != null && selectedSong.getBars().size() > 0){
 			//Handle a timer event
@@ -290,7 +313,10 @@ public class GUI extends JFrame implements ActionListener{
 			update();
 		}
 	}
-	
+
+	/*
+	 * Getters
+	 */
 	public SongList getMasterSongList(){
 		return masterSongList;
 	}
@@ -299,41 +325,45 @@ public class GUI extends JFrame implements ActionListener{
 		
 	    File dataFile = getInputFile();
 	    SongList theSongs = SongList.parseFromFile(dataFile);
+	    
 	    if(theSongs != null){
 	      masterSongList = theSongs;
+	      //Update the UI
 	      view.setSongListData(masterSongList);
 	      selectedSong = null;
 	    }
+	    //Propagate changes.
 	    update();
-	    
-		
 	}
 	
-	private  File getInputFile(){
+	/*
+	 * Handle choosing a file.
+	 */
+	private File getInputFile(){
 		
-		File dataFile =null;
+		File dataFile = null;
 		
 		//Open file dialog to find the data file
    	    String currentDirectoryProperty = System.getProperty("user.dir");
-   	    
         JFileChooser chooser = new  JFileChooser();
         File currentDirectory = new File(currentDirectoryProperty); 
-        
-        
         chooser.setCurrentDirectory(currentDirectory);
-        
-         
         int returnVal = chooser.showOpenDialog(this);
          
+        //Determine if they selected a file.
         if (returnVal == JFileChooser.APPROVE_OPTION) { 
-    
         	dataFile = chooser.getSelectedFile();
         }
         return dataFile;
 	}
 	
+	/*
+	 * Go through our list of songs and build a new
+	 * XML document based off on it.
+	 */
 	private  void exportXMLSongDataToFile(){
 		
+		//Choose place to store exported XML file.
   	    String currentDirectoryProperty = System.getProperty("user.dir");
 	    JFileChooser chooser = new  JFileChooser();
         File currentDirectory = new File(currentDirectoryProperty); 
@@ -347,17 +377,19 @@ public class GUI extends JFrame implements ActionListener{
         	File file = chooser.getSelectedFile();
         	
             try{ 
+            	//Begin the export.
                 PrintWriter    outputFile = new PrintWriter(new FileWriter(file));
 
                 String indent = "";
-                        	
+                 
                 String XMLDocTypeHeader = "<?xml version = \"1.0\"?>";
                 String fakeBookXMLStartTag = "<fakebookXML>";
                 String fakeBookXMLEndTag = "</fakebookXML>";
 
                	outputFile.println(XMLDocTypeHeader);
                	outputFile.println(indent + fakeBookXMLStartTag);
-
+               	
+               	//Export songs to XML.
                	filteredSongList.exportXMLToFile(indent+"  ", outputFile);
 
             	outputFile.println(indent + fakeBookXMLEndTag);
@@ -375,14 +407,18 @@ public class GUI extends JFrame implements ActionListener{
 
 	}
 
-	// Enable all listeners
+	/*
+	 * Enable all listeners
+	 */
 	private void enableListeners() {
 		view.getSearchButton().addActionListener(theSearchButtonListener);
 		view.getSongJList().addListSelectionListener(songListSelectionListener);
 		view.getSearchText().addKeyListener(keyListener);
 	}
 
-	// Disable all listeners
+	/*
+	 * Disable all listeners
+	 */
 	private void disableListeners() {
 		view.getSearchButton().removeActionListener(theSearchButtonListener);
 		view.getSongJList().removeListSelectionListener(songListSelectionListener);
@@ -390,47 +426,59 @@ public class GUI extends JFrame implements ActionListener{
 	}
 
 
-	// This is called when the user clicks the add button
+	/*
+	 * Called when search button is clicked as well as when the 
+	 * application starts up.
+	 * 
+	 * Sets the stage for filteredSongList.
+	 */
 	private void search() {
 		
+		//Grab what the user's search input.
 		String searchPrototype = view.getSearchText().getText().trim();
 
-		// Search
+		//Perform the search.
 		filteredSongList = masterSongList.searchForSongs(masterSongList, searchPrototype);
 		
-		// Set
+		//Update the UI with our results.
 		view.setSongListData(filteredSongList);
 		
+		//Propagate the changes.
 		update();
 	}
 
 
-	// This is called when the user clicks the edit button
 
-
-	// This is called when the user selects a book from the list
-
-	// This is called when the user selects a song from the list
+	/*
+	 * Called when user selects a song from the list
+	 */
 	private void selectSong() {
 		
-		//select songs or toggle it off
+		//Grab the currently selected song from the UI.
 		selectedSong = (Song)(view.getSongJList().getSelectedValue());
 		
+		//Update our UI with the new selected song.
 		chartView.showSong(selectedSong);
 	
+		//Propagate the changes in selection.
 		update();
 	}
 
 
-	// Update the remove button
+	/*
+	 * Enable the search button.
+	 */
 	private void updateSearchButton() {
 		view.getSearchButton().setEnabled(true);
 	}
-
-
 	
-	// This is used so that the child form (Add Song for example)
-	// can tell the presentation layer to update itself.
+	/*
+	 * Called by the child form that captures user input to
+	 * create a new Song.
+	 * 
+	 * This is so that the child form can indirectly tell
+	 * this class to update the UI and propagate the changes.
+	 */
 	public void addSongFromChildForm(Song newSong){
 		if (newSong != null){
 			// Update both lists
@@ -441,25 +489,32 @@ public class GUI extends JFrame implements ActionListener{
 		}
 	}
 	
+	/*
+	 * Called by the child form that captures user input to
+	 * update a Song.
+	 * 
+	 * This is so that the child form can indirectly tell
+	 * this class to update the UI and propagate the changes.
+	 */
 	public void updateSongFromChildForm(){
 		// Update the UI
 		search();
 	}
 	
-	// Update the list
+	//Update the list
 	private void updateList() {        
 		
 		if (selectedSong != null)
 			view.getSongJList().setSelectedValue(selectedSong, true);
 	}
-	// Update chart view
+	//Update chart view
 	private void updateChartView() {
         
 		chartView.update();
 	}
 
 
-	// Update the components
+	//Update the components
 	private void update() {
 		disableListeners();
 		updateList();
