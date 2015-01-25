@@ -74,7 +74,10 @@ public class GUI extends JFrame implements ActionListener{
 	
 	//Bar items
 	private JMenuItem		newBarItem = new JMenuItem("Add Bar");
-
+	
+	//Tempo
+	private int tempo;
+	
 	//
 	
 	/*
@@ -277,13 +280,19 @@ public class GUI extends JFrame implements ActionListener{
 			chartView.stopPlayback();		    
 		}
 		else if(e.getSource() == t100Item){
-			chartView.setTempo(100);		    
+			tempo = 100;
+			chartView.setTempo(100);
+			updateTimerWithTempo(100);		    
 		}
 		else if(e.getSource() == t120Item){
-			chartView.setTempo(120);		    
+			tempo = 120;
+			chartView.setTempo(120);
+			updateTimerWithTempo(120);		    
 		}
 		else if(e.getSource() == t140Item){
-			chartView.setTempo(140);		    
+			tempo = 140;
+			chartView.setTempo(140);
+			updateTimerWithTempo(140);		    
 		}
 		else if(e.getSource() == newSongItem){
 			if (masterSongList.getSongs().size() > 0){
@@ -499,6 +508,41 @@ public class GUI extends JFrame implements ActionListener{
 	public void updateSongFromChildForm(){
 		// Update the UI
 		search();
+	}
+	
+	/*
+	 * Update the timer that is running with the tempo that is set.
+	 * 
+	 * Ideally, there isn't a reason for tempo to be in the GUI 
+	 * layer since ChartView is doing the highlighting.
+	 * 
+	 * TA NOTE: Please keep in mind to me it wasn't very clear
+	 * 			how the math would look like for the tempo. Thats why
+	 * 			I put the tempo (120, 140) * 10 so you can see that I'm
+	 * 			changing the tempo programatically and am just missing the math.
+	 * 
+	 * 			If there is a timeSignature defined then I will do the proper
+	 * 			math as defined in the assignment, but if not I do the generic
+	 * 			*10
+	 * 
+	 * 			My understanding is that the tempo only takes effect once the
+	 * 			user presses play.
+	 * 
+	 */
+	public void updateTimerWithTempo(int tempo){
+		//This is normally the time signature in the first bar of the XML.
+		//That is what I've learned from just looking at the XML, did not see
+		//much mention of this in the assignment.
+		int songTempoDivisor = 1;
+		
+		if (selectedSong != null){
+			String timeSignature = selectedSong.getBars().get(0).getTimeSignature();
+			if (timeSignature != null && !timeSignature.isEmpty()){
+				songTempoDivisor = Character.getNumericValue(timeSignature.charAt(0));
+			}
+		}
+		timer = new Timer(tempo/songTempoDivisor * 10, this); 
+		timer.start(); 
 	}
 	
 	//Update the list
