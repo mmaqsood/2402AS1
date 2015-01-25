@@ -244,7 +244,6 @@ public class Song {
 		
 		if(inputFileReader == null) return null;
 		
-		//System.out.println("Parse Song");
 		
 		Song theSong  = new Song();
 		
@@ -324,7 +323,6 @@ public class Song {
         }
 		
 		
-		//System.out.println("END Song Data Parse");
 		return theSong;			
 				
 	}

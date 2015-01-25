@@ -239,8 +239,6 @@ public class Bar {
 		
 		if(inputFileReader == null) return null;
 		
-		//System.out.println("Parse Bar");
-		
 		Bar theBar  = new Bar();
 		
 		
@@ -360,8 +358,6 @@ public class Bar {
             System.out.println("File Read Error: Cannot read from file.");
         }
 		
-		
-		//System.out.println("END Song Data Parse");
 		return theBar;			
 				
 	}

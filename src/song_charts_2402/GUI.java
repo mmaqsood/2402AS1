@@ -287,7 +287,6 @@ public class GUI extends JFrame implements ActionListener{
 		if (selectedSong != null && selectedSong.getBars().size() > 0){
 			//Handle a timer event
 			chartView.advanceCurrentBar();
-			//System.out.println("TICK");
 			update();
 		}
 	}
@@ -298,7 +297,6 @@ public class GUI extends JFrame implements ActionListener{
 	
 	private void getSongDataFromFile(){
 		
-	    System.out.println("OPEN FILE");
 	    File dataFile = getInputFile();
 	    SongList theSongs = SongList.parseFromFile(dataFile);
 	    if(theSongs != null){
@@ -317,7 +315,6 @@ public class GUI extends JFrame implements ActionListener{
 		
 		//Open file dialog to find the data file
    	    String currentDirectoryProperty = System.getProperty("user.dir");
-   	    //System.out.println("ChartMaker::openFile: currentDirectoryProperty is: " + currentDirectoryProperty);
    	    
         JFileChooser chooser = new  JFileChooser();
         File currentDirectory = new File(currentDirectoryProperty); 
@@ -419,7 +416,6 @@ public class GUI extends JFrame implements ActionListener{
 		//select songs or toggle it off
 		selectedSong = (Song)(view.getSongJList().getSelectedValue());
 		
-		System.out.println("Song Selected: " + selectedSong);	
 		chartView.showSong(selectedSong);
 	
 		update();

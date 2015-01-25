@@ -269,7 +269,6 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 	     movingTextField.setVisible(false); //hide editing text field
 		
 		if(event.getClickCount() == 2){
-		   System.out.println("Mouse Double Clicked");
 		   //handle double click
 		   if(songToView != null){
 			 barBeingEdited = songToView.getBarAtLocation(event.getX(), event.getY());
@@ -279,9 +278,6 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 			 }
 		   }
 		   
-		}
-		else{
-			System.out.println("Mouse Clicked");
 		}
 
 	}
@@ -308,22 +304,6 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mouseReleased(MouseEvent event) {
 		// TODO Auto-generated method stub
-        if (event.isPopupTrigger()){
-        	
-        	System.out.println("PopUp  Click");
-        
-            
-            if(songToView == null) return;
- 
-            popUpBar = songToView.getBarAtLocation(event.getX(), event.getY());
-           	System.out.println("Pop Up Bar: " + popUpBar);
-
-            if(popUpBar == null) return;
-
-            barPopupMenu.show(event.getComponent(), event.getX(), event.getY());
-		       
-      }    
-		
 	}
 
 	

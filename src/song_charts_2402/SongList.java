@@ -27,7 +27,6 @@ public class SongList {
 	
 	public static SongList parseFromFile(File inputFile){
 
-		System.out.println("Parse File Data:");
 		
 		if(inputFile == null) return null;
 		
@@ -69,7 +68,6 @@ public class SongList {
         }
 		
 		
-		System.out.println("END Data Parse");
 		return theSongs;			
 				
 	}
