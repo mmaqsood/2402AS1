@@ -424,7 +424,7 @@ public class Bar {
 			// Reason we have to check for PhraseAbreviation only
 			// if there is no chord is there is so we don't
 			// print N.C by mistake when we want to print x/xx
-			if (getPhraseAbreviation() != null & !getPhraseAbreviation().isEmpty()){
+			if (getPhraseAbreviation() != null && !getPhraseAbreviation().isEmpty()){
 				stringToDraw +=  getPhraseAbreviation() + " ";
 			}
 			else {
