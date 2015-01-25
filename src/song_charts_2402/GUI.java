@@ -247,7 +247,7 @@ public class GUI extends JFrame implements ActionListener{
 			exportXMLSongDataToFile();		    
 		}
 		else if(e.getSource() == playItem){
-			chartView.startPlayback();		    
+			chartView.startPlayback();		     
 		}
 		else if(e.getSource() == pauseItem){
 			chartView.pausePlayback();		    
