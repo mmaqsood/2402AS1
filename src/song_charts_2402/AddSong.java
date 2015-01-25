@@ -122,7 +122,7 @@ public class AddSong {
 										tempoText.getText());
 				
 				// Update the parent with the new song.
-				parentForm.updateForChildForm(newSong);
+				parentForm.addSongFromChildForm(newSong);
 				frame.dispose();
 			}
 		});

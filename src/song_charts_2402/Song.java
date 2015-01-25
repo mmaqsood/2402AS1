@@ -57,15 +57,15 @@ public class Song {
 	}
 	
 	public String getTitle() {return title;}
-	private void setTitle(String aTitleString) {title = aTitleString;}
+	public void setTitle(String aTitleString) {title = aTitleString;}
 	public String getComposer() {return composer;}
-	private void setComposer(String aComposerName) {composer = fixLastNameProblem(aComposerName);}
+	public void setComposer(String aComposerName) {composer = fixLastNameProblem(aComposerName);}
 	public String getMusicalStyle() {return musicalStyle;}
-	private void setMusicalStyle(String aMusicalStyle) {musicalStyle = aMusicalStyle;}
+	public void setMusicalStyle(String aMusicalStyle) {musicalStyle = aMusicalStyle;}
 	public String getKey() {return key;}
-	private void setKey(String aKey) {key = aKey;}
+	public void setKey(String aKey) {key = aKey;}
 	public String getTempo() {return tempo;}
-	private void setTempo(String aTempoString) {tempo = aTempoString;}
+	public void setTempo(String aTempoString) {tempo = aTempoString;}
 	public ArrayList<Bar> getBars() {return bars;}
 	private void addBar(Bar aBar) {bars.add(aBar);}
 	

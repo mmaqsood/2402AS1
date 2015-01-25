@@ -51,6 +51,7 @@ public class GUI extends JFrame implements ActionListener{
 	private JMenuItem		openFileItem = new JMenuItem("Open XML File");    
 	private JMenuItem		exportXMLItem = new JMenuItem("Export XML");   
 	private JMenuItem		newSongItem = new JMenuItem("New Song");  
+	private JMenuItem		updateSongItem = new JMenuItem("Update Song");  
 	
 	private JMenuItem		playItem = new JMenuItem("Play");    
 	private JMenuItem		pauseItem = new JMenuItem("Pause");    
@@ -98,11 +99,13 @@ public class GUI extends JFrame implements ActionListener{
 		fileMenu.add(openFileItem);
 		fileMenu.add(exportXMLItem);
 		fileMenu.add(newSongItem);
-
+		fileMenu.add(updateSongItem);
+		
 		openFileItem.addActionListener(this);
 		exportXMLItem.addActionListener(this);
 		newSongItem.addActionListener(this);
-
+		updateSongItem.addActionListener(this);
+		
 		//PLAY MENU
 		aMenuBar.add(playMenu);
 		playMenu.add(playItem);
@@ -251,6 +254,11 @@ public class GUI extends JFrame implements ActionListener{
 				new AddSong(this);
 			}
 		}
+		else if (e.getSource() == updateSongItem){
+			if (selectedSong != null){
+				new SongDetails(this, selectedSong);
+			}
+		}
 
 	}
 
@@ -375,7 +383,7 @@ public class GUI extends JFrame implements ActionListener{
 		
 		// Set
 		view.setSongListData(filteredSongList);
-		System.out.println("Search clicked");
+		
 		update();
 	}
 
@@ -407,20 +415,19 @@ public class GUI extends JFrame implements ActionListener{
 	
 	// This is used so that the child form (Add Song for example)
 	// can tell the presentation layer to update itself.
-	public void updateForChildForm(Song modifiedSong){
-		if (modifiedSong != null){
+	public void addSongFromChildForm(Song newSong){
+		if (newSong != null){
 			// Update both lists
-			masterSongList.add(modifiedSong);
-			filteredSongList.add(modifiedSong);
+			masterSongList.add(newSong);
 			
 			// Update the UI
-			if (filteredSongList.getSongs().size() > 1){
-				view.setSongListData(filteredSongList);
-			}
-			else {
-				view.setSongListData(masterSongList);
-			}
+			search();
 		}
+	}
+	
+	public void updateSongFromChildForm(){
+		// Update the UI
+		search();
 	}
 	
 	// Update the list
