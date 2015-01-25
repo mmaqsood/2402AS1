@@ -274,13 +274,8 @@ public class ChartView extends JPanel implements MouseListener, MouseMotionListe
 		   if(songToView != null){
 			 barBeingEdited = songToView.getBarAtLocation(event.getX(), event.getY());
 			 if(barBeingEdited != null){
-				 
-		   	     //movingTextField.setFont(...);
-			     movingTextField.setLocation(barBeingEdited.getOriginX(), barBeingEdited.getOriginY());
-			     movingTextField.setText(barBeingEdited.getChords());
-			     movingTextField.setSize(barBeingEdited.getWidth(), barBeingEdited.getHeight());			 
-			     movingTextField.setVisible(true);
-			     movingTextField.requestFocus(); //request keyboard focus
+		   		// Open bar details
+		   		new BarDetails(songToView, barBeingEdited);
 			 }
 		   }
 		   

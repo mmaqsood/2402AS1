@@ -112,16 +112,18 @@ public class Bar {
 	}
 	
 	//various set methods
-	private void setChords(String aChordString) {chords = aChordString;}
-	private void setTimeSignature(String aTimeSignatureString) {timeSignature = aTimeSignatureString;}
-	private void setEndings(String anEndingsString) {endings = anEndingsString;}
-	private void setText(String aTextString) {text = aTextString;}
-	private void setRehearsalLetter(String aRehearLetterString) {rehearsalLetter = aRehearLetterString;}
-	private void setDaCapo(String aDaCapoString) {daCapo = aDaCapoString;}
-	private void setDalSegno(String aDalSegnoString) {dalSegno = aDalSegnoString;}
-	private void setPhraseAbreviation(String aPhraseString) {phraseAbreviation = aPhraseString;}
+	public void setChords(String aChordString) {chords = aChordString;}
+	public void setTimeSignature(String aTimeSignatureString) {timeSignature = aTimeSignatureString;}
+	public void setEndings(String anEndingsString) {endings = anEndingsString;}
+	public void setText(String aTextString) {text = aTextString;}
+	public void setRehearsalLetter(String aRehearLetterString) {rehearsalLetter = aRehearLetterString;}
+	public void setDaCapo(String aDaCapoString) {daCapo = aDaCapoString;}
+	public void setDalSegno(String aDalSegnoString) {dalSegno = aDalSegnoString;}
+	public void setPhraseAbreviation(String aPhraseString) {phraseAbreviation = aPhraseString;}
 	public void setLeftBarLine(BarLine aBarLineConstant) {leftBarLine = aBarLineConstant;}
 	public void setRightBarLine(BarLine aBarLineConstant) {rightBarLine = aBarLineConstant;}
+	public void setSign(Boolean aSign) {sign = aSign;}
+	public void setCoda(Boolean aCoda) {coda = aCoda;}
 	
 	public void parseDataString(String aDataString){
 		//for now assume aDataString just has chord data
@@ -372,12 +374,12 @@ public class Bar {
 	private String getUpperLineDrawString() {
 		String stringToDraw = "";
 
-		if (getRehearsalLetter()!= null && getRehearsalLetter() != ""){
+		if (getRehearsalLetter()!= null && !getRehearsalLetter().isEmpty()){
 			// Rehersal letters are surrounded by the special []s
 			stringToDraw += "[" + getRehearsalLetter() + "] ";
 		}
 
-		if (getEndings()!= null && getEndings() != ""){
+		if (getEndings()!= null && !getEndings().isEmpty()){
 			// Endings get translated from 1 and 2 to 1). and 2).
 			if (getEndings() == "1"){
 				stringToDraw += "1). ";
@@ -397,15 +399,15 @@ public class Bar {
 			stringToDraw += "@ ";
 		}
 
-		if (getDalSegno()!= null && getDalSegno() !=""){
+		if (getDalSegno()!= null && !getDalSegno().isEmpty()){
 			stringToDraw += getDalSegno() + " ";
 		}
 
-		if (getDaCapo()!= null && getDaCapo() !=""){
+		if (getDaCapo()!= null && !getDaCapo().isEmpty()){
 			stringToDraw += getDaCapo() + " ";
 		}
 		
-		if (getText() != null && getText() !=""){
+		if (getText() != null && !getText().isEmpty()){
 			stringToDraw += getText() + " ";
 		}
 
@@ -422,14 +424,14 @@ public class Bar {
 		 * are present in the chord.
 		*/
 
-		if (getChords() != null && getChords() != ""){
+		if (getChords() != null && !getChords().isEmpty()){
 			stringToDraw += getChords() + " ";
 		}
 		else {
 			// Reason we have to check for PhraseAbreviation only
 			// if there is no chord is there is so we don't
 			// print N.C by mistake when we want to print x/xx
-			if (getPhraseAbreviation() != null & getPhraseAbreviation() != ""){
+			if (getPhraseAbreviation() != null & !getPhraseAbreviation().isEmpty()){
 				stringToDraw +=  getPhraseAbreviation() + " ";
 			}
 			else {
@@ -437,7 +439,7 @@ public class Bar {
 			}
 		}
 
-		if (getTimeSignature()!= null && getTimeSignature() != ""){
+		if (getTimeSignature()!= null && !getTimeSignature().isEmpty()){
 			stringToDraw += getTimeSignature() + " ";
 		}
 
