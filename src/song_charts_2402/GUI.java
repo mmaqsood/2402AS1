@@ -506,6 +506,8 @@ public class GUI extends JFrame implements ActionListener{
 	 * this class to update the UI and propagate the changes.
 	 */
 	public void updateSongFromChildForm(){
+		// Update the tempo incase the time signature changed
+		updateTimerWithTempo(tempo);
 		// Update the UI
 		search();
 	}
@@ -525,8 +527,6 @@ public class GUI extends JFrame implements ActionListener{
 	 * 			math as defined in the assignment, but if not I do the generic
 	 * 			*10
 	 * 
-	 * 			My understanding is that the tempo only takes effect once the
-	 * 			user presses play.
 	 * 
 	 */
 	public void updateTimerWithTempo(int tempo){
@@ -535,7 +535,7 @@ public class GUI extends JFrame implements ActionListener{
 		//much mention of this in the assignment.
 		int songTempoDivisor = 1;
 		
-		if (selectedSong != null){
+		if (selectedSong != null && selectedSong.getBars().size() > 0){
 			String timeSignature = selectedSong.getBars().get(0).getTimeSignature();
 			if (timeSignature != null && !timeSignature.isEmpty()){
 				songTempoDivisor = Character.getNumericValue(timeSignature.charAt(0));
